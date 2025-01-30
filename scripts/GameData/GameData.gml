@@ -1,5 +1,5 @@
 
-//Party data
+//Party dataへコメント追加
 global.party = 
 [
 	{
