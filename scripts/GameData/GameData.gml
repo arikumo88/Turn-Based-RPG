@@ -23,7 +23,7 @@ global.party =
 		sprites : { idle: sQuestyIdle, attack: sQuestyCast, cast: sQuestyCast, down: sQuestyDown},
 		actions : []
 	}
-]
+]//コメントテスト
 
 //Enemy Data
 global.enemies =
