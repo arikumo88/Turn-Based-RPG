@@ -3,7 +3,7 @@ instance_deactivate_all(true);
 units = [];
 turn = 0;
 unitTurnOrder = [];
-unitBattleOrder = [];
+unitRenderOrder = [];
 
 turnCount = 0;
 roundCount = 0;
@@ -24,7 +24,7 @@ for (var i = 0; i < array_length(enemies); i++)
 //パーティー作成
 for (var i = 0; i < array_length(global.party); i++)
 {
-    partyUnits[i] = instance_create_depth(x + 70 + (i * 10), y + 68 + (i * 15), depth - 10, oBattleUnitPC, global.party[i]);
+    partyUnits[i] = instance_create_depth(x + 70 - (i * 10), y + 68 + (i * 15), depth - 10, oBattleUnitPC, global.party[i]);
     array_push(units, partyUnits[i]);
 }
 
@@ -70,7 +70,7 @@ function BeginAction(_user, _action, _targets)
     {
         acting = true;
         //アニメーションを再生
-        if (!is_undefined(_action[$ "userAnimation"])) && (is_undefined(_user.sprites[$ _action.userAnimation]))
+        if (!is_undefined(_action[$ "userAnimation"])) && (!is_undefined(_user.sprites[$ _action.userAnimation]))
         {
             sprite_index = sprites[$ _action.userAnimation];
             image_index = 0;
