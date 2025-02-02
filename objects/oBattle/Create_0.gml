@@ -5,6 +5,14 @@ turn = 0;
 unitTurnOrder = [];
 unitBattleOrder = [];
 
+turnCount = 0;
+roundCount = 0;
+battleWaitTimeFrames = 30;
+battleWaitTimeRemaining = 0;
+currentUser = noone;
+currentAction = -1;
+currentTargets = noone;
+
 
 //エネミー作成
 for (var i = 0; i < array_length(enemies); i++)
@@ -34,3 +42,53 @@ RefreshRenderOrder = function()
     });
 }
 RefreshRenderOrder();
+
+function BattleStateSelectAction()
+{
+    //現在のユニットを取得
+    var _unit = unitTurnOrder[turn];
+    
+    //ユニットが行動可能か確認
+    if (!instance_exists(_unit)) || (_unit.hp <= 0)
+    {
+        battleState = BattleStateVictoryCheck;
+        exit;
+    }
+    
+    //実行するアクションを選択
+    BeginAction(_unit.id, global.actionLibrary.attack, _unit.id);
+}
+
+function BeginAction(_user, _action, _targets)
+{
+    currentUser = _user;
+    currentAction = _action;
+    currentTargets = _targets;
+    if (!is_array(currentTargets)) currentTargets = [currentTargets];
+        battleWaitTimeRemaining = battleWaitTimeFrames;
+    with (_user)
+    {
+        acting = true;
+        //アニメーションを再生
+        if (!is_undefined(_action[$ "userAnimation"])) && (is_undefined(_user.sprites[$ _action.userAnimation]))
+        {
+            sprite_index = sprites[$ _action.userAnimation];
+            image_index = 0;
+        }
+    }
+    battleState = BattleStatePerformAction;
+}
+
+function BattleStatePerformAction()
+{
+}
+
+function BattleStateVictoryCheck()
+{
+}
+
+function BattleStateTurnProgression()
+{
+}
+
+battleState = BattleStateSelectAction;
