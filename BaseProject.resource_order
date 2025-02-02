@@ -25,6 +25,7 @@
   "ResourceOrderSettings":[
     {"name":"fnM3x6","order":2,"path":"fonts/fnM3x6/fnM3x6.yy",},
     {"name":"fnM5x7","order":1,"path":"fonts/fnM5x7/fnM5x7.yy",},
+    {"name":"oBattleUnit","order":35,"path":"objects/oBattleUnit/oBattleUnit.yy",},
     {"name":"oPlayer","order":2,"path":"objects/oPlayer/oPlayer.yy",},
     {"name":"oSlime","order":1,"path":"objects/oSlime/oSlime.yy",},
     {"name":"BattleFinctions","order":4,"path":"scripts/BattleFinctions/BattleFinctions.yy",},
