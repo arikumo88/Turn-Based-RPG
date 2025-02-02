@@ -46,6 +46,8 @@
     {"id":{"name":"README","path":"notes/README/README.yy",},},
     {"id":{"name":"oBattle","path":"objects/oBattle/oBattle.yy",},},
     {"id":{"name":"oBattleUnit","path":"objects/oBattleUnit/oBattleUnit.yy",},},
+    {"id":{"name":"oBattleUnitEnemy","path":"objects/oBattleUnitEnemy/oBattleUnitEnemy.yy",},},
+    {"id":{"name":"oBattleUnitPC","path":"objects/oBattleUnitPC/oBattleUnitPC.yy",},},
     {"id":{"name":"oCamera","path":"objects/oCamera/oCamera.yy",},},
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
     {"id":{"name":"oSlime","path":"objects/oSlime/oSlime.yy",},},
