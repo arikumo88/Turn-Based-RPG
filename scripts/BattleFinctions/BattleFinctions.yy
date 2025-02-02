@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"BattleFinctions",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"BattleFinctions",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

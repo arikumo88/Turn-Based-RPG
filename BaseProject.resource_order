@@ -27,6 +27,7 @@
     {"name":"fnM5x7","order":1,"path":"fonts/fnM5x7/fnM5x7.yy",},
     {"name":"oPlayer","order":2,"path":"objects/oPlayer/oPlayer.yy",},
     {"name":"oSlime","order":1,"path":"objects/oSlime/oSlime.yy",},
+    {"name":"BattleFinctions","order":4,"path":"scripts/BattleFinctions/BattleFinctions.yy",},
     {"name":"GameData","order":3,"path":"scripts/GameData/GameData.yy",},
     {"name":"sAttackBonk","order":21,"path":"sprites/sAttackBonk/sAttackBonk.yy",},
     {"name":"sAttackCure","order":1,"path":"sprites/sAttackCure/sAttackCure.yy",},
