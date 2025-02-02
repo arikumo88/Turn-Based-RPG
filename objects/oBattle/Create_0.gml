@@ -81,14 +81,69 @@ function BeginAction(_user, _action, _targets)
 
 function BattleStatePerformAction()
 {
+    //アニメーション再生中の場合
+    if (currentUser.acting)
+    {
+        //終了時、アクションエフェクトを実行する
+        if (currentUser.image_index >= currentUser.image_number -1)
+        {
+            with (currentUser)
+            {
+                sprite_index = sprites.idle;
+                image_index = 0;
+                acting = false;
+            }
+            
+            if (variable_struct_exists(currentAction, "effectSprite"))
+            {
+                if (currentAction.effectOnTarget == MODE.ALWAYS) || ((currentAction.effectOnTarget == MODE.VARIES) && (array_length(currentTargets) <= 1))
+                {
+                    for (var i = 0; i < array_length(currentTargets); i++)
+                    {
+                        instance_create_depth(currentTargets[i].x, currentTargets[i].y, currentTargets[i].depth - 1, oBattleEffect,{
+                            sprite_index: currentAction.effectSprite});
+                    }
+                }
+                else //play it at 0,0
+                {
+                    var _effectSprite = currentAction._effectSprite
+                    if (variable_struct_exists(currentAction, "effectSpriteNoTarget")) _effectSprite = currentAction.effectSpriteNoTarget;
+                        instance_create_depth(x, y, depth - 100, oBattleEffect,{
+                        sprite_index: _effectSprite});
+                }
+            }
+            currentAction.func(currentUser, currentTargets);
+        }
+    }
+    else //ディレイ待ちとターン終了
+    {
+        if (!instance_exists(oBattleEffect))
+        {
+            battleWaitTimeRemaining--
+            if (battleWaitTimeRemaining == 0)
+            {
+                battleState = BattleStateVictoryCheck;
+            }
+        }
+    }
 }
 
 function BattleStateVictoryCheck()
 {
+    battleState = BattleStateTurnProgression;
 }
 
 function BattleStateTurnProgression()
 {
+    turnCount++;
+    turn++;
+    //ターンのループ
+    if (turn > array_length(unitTurnOrder) - 1)
+    {
+        turn = 0;
+        roundCount++;
+    }
+    battleState = BattleStateSelectAction;
 }
 
 battleState = BattleStateSelectAction;
