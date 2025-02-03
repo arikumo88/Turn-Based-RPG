@@ -45,36 +45,73 @@ RefreshRenderOrder();
 
 function BattleStateSelectAction()
 {
-    //現在のユニットを取得
-    var _unit = unitTurnOrder[turn];
-    
-    //ユニットが行動可能か確認
-    if (!instance_exists(_unit)) || (_unit.hp <= 0)
+    if (!instance_exists(oMenu))
     {
-        battleState = BattleStateVictoryCheck;
-        exit;
-    }
-    
-    //実行するアクションを選択
-    //BeginAction(_unit.id, global.actionLibrary.attack, _unit.id);
-    
-    //if unit is player controlled
-    if (_unit.object_index == oBattleUnitPC)
-    {
-        //ランダムなパーティーメンバーに攻撃
-        var _action = global.actionLibrary.attack;
-        var _possibleTargets = array_filter(oBattle.enemyUnits, function(_unit, _index)
+        //現在のユニットを取得
+        var _unit = unitTurnOrder[turn];
+        
+        //ユニットが行動可能か確認
+        if (!instance_exists(_unit)) || (_unit.hp <= 0)
         {
-        return (_unit.hp > 0); 
-        });
-        var _target = _possibleTargets[irandom(array_length(_possibleTargets) - 1)];
-        BeginAction(_unit.id, _action, _target);
-    }
-    else
-    {
-        //ユニットがAI制御の場合
-        var _enemyAction = _unit.AIscript();
-        if (_enemyAction != -1) BeginAction(_unit.id, _enemyAction[0], _enemyAction[1]);
+            battleState = BattleStateVictoryCheck;
+            exit;
+        }
+        
+        //実行するアクションを選択
+        //BeginAction(_unit.id, global.actionLibrary.attack, _unit.id);
+        
+        //if unit is player controlled
+        if (_unit.object_index == oBattleUnitPC)
+        {
+            var _menuOptions = [];
+            var _subMenus = {};
+            
+            var _actionList = _unit.actions;
+            
+            for (var i = 0; i < array_length(_actionList); i++)
+            {
+                var _action = _actionList[i];
+                var _available = true; //後でMPチェックを実施する
+                var _nameAndCount = _action.name; //後でアイテムアクションを実装する
+                if (_action.subMenu == -1)
+                {
+                    array_push(_menuOptions, [_nameAndCount, MenuSelectAction, [_unit, _action], _available]);
+                }
+                else
+                {
+                    //create or add to a submenu
+                    if (is_undefined(_subMenus[$ _action.subMenu]))
+                    {
+                        variable_struct_set(_subMenus, _action.subMenu, [[_nameAndCount, MenuSelectAction, [_unit, _action], _available]]);
+                    }
+                    else
+                    {
+                        array_push(_subMenus[$ _action.subMenu], [_nameAndCount, MenuSelectAction, [_unit, _action], _available]);
+                    }
+                }
+                
+                //turn sub menus into an array
+                var _subMenusArray = variable_struct_get_names(_subMenus);
+                for (var i = 0; i < array_length(_subMenusArray); i++)
+                {
+                    //sort submenu if needed
+                    //
+                    
+                    //add back option at the end of each submenu
+                    array_push(_subMenus[$ _subMenusArray[i]], ["Back", MenuGoBack, -1 ,true]);
+                    //add submenu into main menu
+                    array_push(_menuOptions, [_subMenusArray[i], SubMenu, [_subMenus[$ _subMenusArray[i]]], true]);
+                }
+            }
+            
+            Menu(x + 10, y + 110, _menuOptions, , 74, 60);
+        }
+        else
+        {
+            //ユニットがAI制御の場合
+            var _enemyAction = _unit.AIscript();
+            if (_enemyAction != -1) BeginAction(_unit.id, _enemyAction[0], _enemyAction[1]);
+        }
     }
 }
 

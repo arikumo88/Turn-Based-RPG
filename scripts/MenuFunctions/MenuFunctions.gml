@@ -61,6 +61,13 @@ function MenuGoBack()
     hover = 0;
 }
 
+function MenuSelectAction(_user, _action)
+{
+    with (oMenu) active = false;
+    with (oBattle) BeginAction(_user, _action, _user);
+    with (oMenu) instance_destroy();
+}
+
 
 
 
