@@ -2,7 +2,7 @@ draw_sprite_stretched(sBox, 0, x, y, widthFull, heightFull);
 draw_set_color(c_white);
 draw_set_font(fnM5x7);
 draw_set_halign(fa_left);
-draw_set_valign(fa_top)
+draw_set_valign(fa_top);
 
 var _desc = !(description == -1);
 var _scrollPush = max(0, hover - (visibleOptionsMax - 1));
@@ -24,7 +24,7 @@ for (l = 0; l < (visibleOptionsMax + _desc); l++)
             draw_set_color(c_yellow);
         }
         if (options[_optionToShow][3] == false) draw_set_color(c_gray);
-        draw_text(x + xmargin, y + ymargin + 1 * heightLine, _str);
+        draw_text(x + xmargin, y + ymargin + l * heightLine, _str);
     }
 }
 
